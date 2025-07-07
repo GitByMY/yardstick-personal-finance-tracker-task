@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Apple-inspired Glassmorphism Design System - All colors MUST be HSL */
+
+@layer base {
+  :root {
+    /* Glass Background System */
+    --background: 240 20% 4%;
+    --background-glass: 240 20% 8%;
+    --background-glass-light: 240 15% 12%;
+    --foreground: 240 5% 96%;
+
+    /* Glass Card System */
+    --card: 240 15% 8%;
+    --card-glass: 240 20% 6%;
+    --card-foreground: 240 5% 96%;
+    --card-border: 240 15% 20%;
+
+    /* Popover Glass */
+    --popover: 240 20% 6%;
+    --popover-foreground: 240 5% 96%;
+
+    /* Primary Glass Blues */
+    --primary: 220 100% 60%;
+    --primary-glass: 220 80% 50%;
+    --primary-foreground: 240 5% 96%;
+    --primary-glow: 220 100% 70%;
+
+    /* Secondary Glass */
+    --secondary: 240 15% 15%;
+    --secondary-foreground: 240 5% 90%;
+    --secondary-glow: 240 50% 40%;
+
+    /* Muted Glass */
+    --muted: 240 15% 12%;
+    --muted-foreground: 240 5% 65%;
+
+    /* Accent Glass */
+    --accent: 280 100% 70%;
+    --accent-glass: 280 80% 60%;
+    --accent-foreground: 240 5% 96%;
+    --accent-glow: 280 100% 80%;
+
+    /* Destructive Glass */
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 240 5% 96%;
+    --destructive-glow: 0 85% 70%;
+
+    /* Success Glass */
+    --success: 140 85% 60%;
+    --success-foreground: 240 5% 96%;
+    --success-glow: 140 85% 70%;
+
+    /* Warning Glass */
+    --warning: 45 100% 60%;
+    --warning-foreground: 240 5% 96%;
+    --warning-glow: 45 100% 70%;
+
+    /* Glass Borders & Inputs */
+    --border: 240 15% 20%;
+    --border-glass: 240 20% 25%;
+    --input: 240 15% 8%;
+    --ring: 220 100% 60%;
+
+    /* Glass Radius */
+    --radius: 1rem;
+    --radius-glass: 1.5rem;
+
+    /* Glass Shadows & Glows */
+    --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    --shadow-glass-strong: 0 20px 60px 0 rgba(31, 38, 135, 0.5);
+    --glow-primary: 0 0 40px hsl(var(--primary-glow) / 0.3);
+    --glow-accent: 0 0 40px hsl(var(--accent-glow) / 0.3);
+    --glow-success: 0 0 40px hsl(var(--success-glow) / 0.3);
+    --glow-destructive: 0 0 40px hsl(var(--destructive-glow) / 0.3);
+
+    /* Glass Gradients */
+    --gradient-glass: linear-gradient(135deg, hsl(var(--background-glass) / 0.8), hsl(var(--background-glass-light) / 0.6));
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
+    --gradient-surface: linear-gradient(135deg, hsl(var(--card) / 0.9), hsl(var(--card-glass) / 0.7));
+
+    /* Animation Curves */
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  }
+
+  .dark {
+    /* Glass Background System */
+    --background: 240 20% 4%;
+    --background-glass: 240 20% 8%;
+    --background-glass-light: 240 15% 12%;
+    --foreground: 240 5% 96%;
+
+    /* Glass Card System */
+    --card: 240 15% 8%;
+    --card-glass: 240 20% 6%;
+    --card-foreground: 240 5% 96%;
+    --card-border: 240 15% 20%;
+
+    /* Popover Glass */
+    --popover: 240 20% 6%;
+    --popover-foreground: 240 5% 96%;
+
+    /* Primary Glass Blues */
+    --primary: 220 100% 60%;
+    --primary-glass: 220 80% 50%;
+    --primary-foreground: 240 5% 96%;
+    --primary-glow: 220 100% 70%;
+
+    /* Secondary Glass */
+    --secondary: 240 15% 15%;
+    --secondary-foreground: 240 5% 90%;
+    --secondary-glow: 240 50% 40%;
+
+    /* Muted Glass */
+    --muted: 240 15% 12%;
+    --muted-foreground: 240 5% 65%;
+
+    /* Accent Glass */
+    --accent: 280 100% 70%;
+    --accent-glass: 280 80% 60%;
+    --accent-foreground: 240 5% 96%;
+    --accent-glow: 280 100% 80%;
+
+    /* Destructive Glass */
+    --destructive: 0 85% 60%;
+    --destructive-foreground: 240 5% 96%;
+    --destructive-glow: 0 85% 70%;
+
+    /* Success Glass */
+    --success: 140 85% 60%;
+    --success-foreground: 240 5% 96%;
+    --success-glow: 140 85% 70%;
+
+    /* Warning Glass */
+    --warning: 45 100% 60%;
+    --warning-foreground: 240 5% 96%;
+    --warning-glow: 45 100% 70%;
+
+    /* Glass Borders & Inputs */
+    --border: 240 15% 20%;
+    --border-glass: 240 20% 25%;
+    --input: 240 15% 8%;
+    --ring: 220 100% 60%;
+
+    /* Sidebar colors for dark mode */
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Glass morphism utility classes */
+  .glass-card {
+    @apply bg-gradient-surface backdrop-blur-glass border border-border-glass shadow-glass;
+  }
+
+  .glass-button {
+    @apply bg-card-glass/50 backdrop-blur-glass border border-border-glass hover:bg-card-glass/80 hover:shadow-glass transition-all duration-300;
+  }
+
+  .glass-input {
+    @apply bg-card-glass/30 backdrop-blur-glass border border-border-glass focus:border-primary focus:shadow-glow-primary transition-all duration-300;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted) / 0.3);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border-glass));
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.7);
+  }
+}
