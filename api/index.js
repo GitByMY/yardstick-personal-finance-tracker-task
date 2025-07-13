@@ -6,12 +6,12 @@ console.log('NODE_ENV:', process.env.NODE_ENV);
 
 import serverless from 'serverless-http';
 import dotenv from 'dotenv';
-import { connectToDatabase } from '../server/config/database.js';
+import { connectToDatabase } from './config/database.js';
 import cors from 'cors';
-import transactionRoutes from '../server/routes/transactions.js';
-import categoryRoutes from '../server/routes/categories.js';
-import budgetRoutes from '../server/routes/budgets.js';
-import userRoutes from '../server/routes/users.js';
+import transactionRoutes from './routes/transactions.js';
+import categoryRoutes from './routes/categories.js';
+import budgetRoutes from './routes/budgets.js';
+import userRoutes from './routes/users.js';
 
 if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
