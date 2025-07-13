@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.DEV ? 'http://localhost:3001/api' : '/api';
+const API_BASE_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3001/api';
 
 // API utility functions
 export const api = {
