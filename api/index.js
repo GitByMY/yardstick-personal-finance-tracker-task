@@ -1,7 +1,16 @@
 import express from 'express';
 import serverless from 'serverless-http';
-import { MongoClient } from 'mongodb';
+import dotenv from 'dotenv';
+import { connectToDatabase } from '../server/config/database.js';
 import cors from 'cors';
+import transactionRoutes from '../server/routes/transactions.js';
+import categoryRoutes from '../server/routes/categories.js';
+import budgetRoutes from '../server/routes/budgets.js';
+import userRoutes from '../server/routes/users.js';
+
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const app = express();
 
@@ -15,14 +24,8 @@ app.use(express.json());
 
 // Simple connection test function
 async function testConnection() {
-  const client = new MongoClient(process.env.MONGODB_URI, {
-    serverApi: { version: '1', strict: true, deprecationErrors: true }
-  });
-  
   try {
-    await client.connect();
-    await client.db(process.env.MONGODB_DB_NAME).command({ ping: 1 });
-    await client.close();
+    await connectToDatabase();
     return true;
   } catch (error) {
     console.error('MongoDB connection test failed:', error);
@@ -73,6 +76,12 @@ app.get('/api/health', async (req, res) => {
     });
   }
 });
+
+// API Routes
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/budgets', budgetRoutes);
+app.use('/api/users', userRoutes);
 
 // Fallback route
 app.use('*', (req, res) => {

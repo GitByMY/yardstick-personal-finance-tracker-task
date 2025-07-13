@@ -5,11 +5,11 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
-const uri = process.env.MONGODB_URI;
-const dbName = process.env.MONGODB_DB_NAME;
+const uri = process.env.MONGODB_URI || process.env.DATABASE_URL || process.env.MONGODB_URL;
+const dbName = process.env.MONGODB_DB_NAME; // optional override of DB name in URI
 
-if (!uri || !dbName) {
-  throw new Error('Missing MONGODB_URI or MONGODB_DB_NAME. Check your .env file and dotenv config path.');
+if (!uri) {
+  throw new Error('Missing MongoDB connection string. Please set MONGODB_URI, DATABASE_URL, or MONGODB_URL.');
 }
 
 let cachedClient = null;
@@ -30,7 +30,7 @@ export async function connectToDatabase() {
 
   try {
       await client.connect();
-    const db = client.db(dbName);
+    const db = dbName ? client.db(dbName) : client.db();
 
     cachedClient = client;
     cachedDb = db;
@@ -65,4 +65,13 @@ async function createIndexes(db) {
 export async function getDatabase() {
   const { db } = await connectToDatabase();
   return db;
+}
+
+export async function closeConnection() {
+  if (cachedClient) {
+    await cachedClient.close();
+    cachedClient = null;
+    cachedDb = null;
+    console.log('MongoDB connection closed');
+  }
 }
