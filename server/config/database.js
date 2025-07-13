@@ -13,14 +13,20 @@ dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 let cachedClient = null;
 let cachedDb = null;
 export async function connectToDatabase() {
-  // Load and validate URI
   const uri = process.env.MONGODB_URI || process.env.DATABASE_URL || process.env.MONGODB_URL;
+  const dbName = process.env.MONGODB_DB_NAME;
+
+  console.log('[connectToDatabase] Start');
+  console.log('[connectToDatabase] URI present:', !!uri);
+  console.log('[connectToDatabase] DB Name:', dbName);
+
   if (!uri) {
+    console.log('[connectToDatabase] ❌ No MongoDB URI found');
     throw new Error('Missing MongoDB connection string. Please set MONGODB_URI, DATABASE_URL, or MONGODB_URL.');
   }
-  const dbName = process.env.MONGODB_DB_NAME; // optional override if not in URI
 
   if (cachedClient && cachedDb) {
+    console.log('[connectToDatabase] Using cached MongoDB connection');
     return { client: cachedClient, db: cachedDb };
   }
 
@@ -35,7 +41,9 @@ export async function connectToDatabase() {
   });
 
   try {
+    console.log('[connectToDatabase] Attempting client.connect()');
     await client.connect();
+    console.log('[connectToDatabase] client.connect() successful');
     const db = dbName ? client.db(dbName) : client.db();
 
     cachedClient = client;
@@ -49,6 +57,7 @@ export async function connectToDatabase() {
     throw error;
   }
 }
+
 
 async function createIndexes(db) {
   try {
