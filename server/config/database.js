@@ -5,16 +5,18 @@ if (process.env.NODE_ENV !== 'production') {
   dotenv.config();
 }
 
-const uri = process.env.MONGODB_URI || process.env.DATABASE_URL || process.env.MONGODB_URL;
-const dbName = process.env.MONGODB_DB_NAME; // optional override of DB name in URI
 
-if (!uri) {
-  throw new Error('Missing MongoDB connection string. Please set MONGODB_URI, DATABASE_URL, or MONGODB_URL.');
-}
 
 let cachedClient = null;
 let cachedDb = null;
 export async function connectToDatabase() {
+  // Load and validate URI
+  const uri = process.env.MONGODB_URI || process.env.DATABASE_URL || process.env.MONGODB_URL;
+  if (!uri) {
+    throw new Error('Missing MongoDB connection string. Please set MONGODB_URI, DATABASE_URL, or MONGODB_URL.');
+  }
+  const dbName = process.env.MONGODB_DB_NAME; // optional override if not in URI
+
   if (cachedClient && cachedDb) {
     return { client: cachedClient, db: cachedDb };
   }
@@ -26,10 +28,11 @@ export async function connectToDatabase() {
       deprecationErrors: true,
     },
     maxPoolSize: 1,
+    serverSelectionTimeoutMS: 5000,
   });
 
   try {
-      await client.connect();
+    await client.connect();
     const db = dbName ? client.db(dbName) : client.db();
 
     cachedClient = client;

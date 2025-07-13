@@ -55,15 +55,15 @@ app.use('*', (req, res) => {
 async function startServer() {
   try {
     await connectToDatabase();
-    
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-      console.log(`Health check: http://localhost:${PORT}/api/health`);
-    });
+    console.log('🔌 Initial MongoDB connection established');
   } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
+    console.error('⚠️ Initial MongoDB connection failed, continuing without DB:', error);
   }
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`Health check: http://localhost:${PORT}/api/health`);
+  });
 }
 
 // Graceful shutdown
