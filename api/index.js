@@ -1,4 +1,9 @@
 import express from 'express';
+console.log('--- API function cold start ---');
+console.log('MONGODB_URI present:', !!process.env.MONGODB_URI);
+console.log('MONGODB_DB_NAME present:', !!process.env.MONGODB_DB_NAME);
+console.log('NODE_ENV:', process.env.NODE_ENV);
+
 import serverless from 'serverless-http';
 import dotenv from 'dotenv';
 import { connectToDatabase } from '../server/config/database.js';
