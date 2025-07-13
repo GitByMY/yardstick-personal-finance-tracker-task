@@ -67,11 +67,11 @@ export const ConnectionStatus = () => {
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Server className="w-4 h-4" />
-                <span>Backend Server: Offline</span>
+                <span>Backend Server: {isChecking ? 'Checking...' : isConnected ? 'Online' : 'Offline'}</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Database className="w-4 h-4" />
-                <span>MongoDB: Waiting for connection</span>
+                <span>MongoDB: {isChecking ? 'Checking...' : isConnected ? 'Connected' : 'Disconnected'}</span>
               </div>
               
               {error && (
