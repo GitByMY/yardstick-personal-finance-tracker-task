@@ -1,8 +1,10 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
 
-// Load environment variables (adjust path as needed for production/deployment)
-dotenv.config({ path: process.env.NODE_ENV === 'production' ? '.env' : '../.env' });
+// Only load local .env in development
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config();
+}
 
 const uri = process.env.MONGODB_URI;
 const dbName = process.env.MONGODB_DB_NAME;
