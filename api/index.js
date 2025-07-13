@@ -14,6 +14,15 @@ if (process.env.NODE_ENV !== 'production') {
 
 const app = express();
 
+// Debug endpoint to inspect env vars in serverless runtime
+app.get('/api/env', (req, res) => {
+  res.json({
+    MONGODB_URI: !!process.env.MONGODB_URI,
+    MONGODB_DB_NAME: !!process.env.MONGODB_DB_NAME,
+    NODE_ENV: process.env.NODE_ENV
+  });
+});
+
 // Middleware
 app.use(cors({
   origin: '*',
