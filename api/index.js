@@ -21,6 +21,7 @@ const app = express();
 
 // Debug endpoint to inspect env vars in serverless runtime
 app.get('/api/env', (req, res) => {
+  console.log('[HANDLER] /api/env called');
   res.json({
     MONGODB_URI: !!process.env.MONGODB_URI,
     MONGODB_DB_NAME: !!process.env.MONGODB_DB_NAME,
@@ -38,6 +39,7 @@ app.use(express.json());
 
 // Simple connection test function
 async function testConnection() {
+  console.log('[testConnection] called');
   try {
     await connectToDatabase();
     return true;
@@ -49,6 +51,7 @@ async function testConnection() {
 
 // Health check with timeout
 app.get('/api/health', async (req, res) => {
+  console.log('[HANDLER] /api/health called');
   // Set a timeout of 10 seconds
   const timeout = setTimeout(() => {
     res.status(408).json({
