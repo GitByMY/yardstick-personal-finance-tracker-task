@@ -1,4 +1,5 @@
 const express = require('express');
+const serverless = require('serverless-http');
 const path = require('path');
 
 // Import your routes and other server logic
@@ -17,4 +18,4 @@ app.use('/api/transactions', transactions);
 app.use('/api/users', users);
 
 // Export as Vercel handler
-module.exports = app;
+module.exports = serverless(app);
