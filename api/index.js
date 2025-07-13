@@ -1,48 +1,46 @@
-const express = require('express');
-const serverless = require('serverless-http');
-const { connectToDatabase } = require('../server/config/database.js');
+import express from 'express';
+import serverless from 'serverless-http';
+import { connectToDatabase } from '../server/config/database.js';
+import cors from 'cors';
 
-// Import your routes
-const budgets = require('../server/routes/budgets');
-const categories = require('../server/routes/categories');
-const transactions = require('../server/routes/transactions');
-const users = require('../server/routes/users');
+// Import routes
+import budgetRoutes from '../server/routes/budgets.js';
+import categoryRoutes from '../server/routes/categories.js';
+import transactionRoutes from '../server/routes/transactions.js';
+import userRoutes from '../server/routes/users.js';
 
 const app = express();
+
+// Middleware
+app.use(cors());
 app.use(express.json());
-
-// Middleware to ensure database connection
-app.use(async (req, res, next) => {
-  try {
-    await connectToDatabase();
-    next();
-  } catch (error) {
-    console.error('Database connection error:', error);
-    res.status(500).json({ error: 'Database connection failed' });
-  }
-});
-
-// Use your routes
-app.use('/api/budgets', budgets);
-app.use('/api/categories', categories);
-app.use('/api/transactions', transactions);
-app.use('/api/users', users);
 
 // Health check endpoint
 app.get('/api/health', async (req, res) => {
   try {
-    await connectToDatabase();
-    res.json({ status: 'ok' });
+    const { db } = await connectToDatabase();
+    // Test the database connection
+    await db.command({ ping: 1 });
+    res.json({ status: 'ok', message: 'Database connected' });
   } catch (error) {
     console.error('Health check error:', error);
-    res.status(500).json({ status: 'error', message: error.message });
+    res.status(500).json({
+      status: 'error',
+      message: error.message,
+      details: process.env.MONGODB_URI ? 'URI exists' : 'URI missing'
+    });
   }
 });
 
-// Global error handler
+// Use routes
+app.use('/api/budgets', budgetRoutes);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/users', userRoutes);
+// Error handling
 app.use((err, req, res, next) => {
-  console.error('Unhandled error:', err);
+  console.error('Error:', err);
   res.status(500).json({ error: err.message });
 });
 
-module.exports = serverless(app);
+export default serverless(app);
