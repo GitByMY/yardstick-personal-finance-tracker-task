@@ -11,6 +11,8 @@ import userRoutes from './routes/users.js';
 
 dotenv.config();
 
+const app = express();
+
 // Debug endpoint to inspect local environment variables
 app.get('/api/env', (req, res) => {
   res.json({
@@ -20,8 +22,6 @@ app.get('/api/env', (req, res) => {
     PORT: process.env.PORT
   });
 });
-
-const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
