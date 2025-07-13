@@ -1,8 +1,13 @@
 import { MongoClient, ServerApiVersion } from 'mongodb';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 if (process.env.NODE_ENV !== 'production') {
-  dotenv.config();
+  // Load .env from project root
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+  dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 }
 
 
@@ -37,7 +42,7 @@ export async function connectToDatabase() {
 
     cachedClient = client;
     cachedDb = db;
-    await createIndexes(db);
+    // createIndexes(db); // index creation skipped in serverless to speed up invocations
 
     console.log("✅ Successfully connected to MongoDB");
     return { client, db };
