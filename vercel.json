@@ -11,7 +11,7 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { "zeroConfig": true }
+      "config": { "distDir": "dist" }
     }
   ],
   "routes": [
